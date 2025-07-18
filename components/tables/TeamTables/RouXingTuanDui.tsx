@@ -1,35 +1,12 @@
-import React, { useState, useEffect } from "react";
-
-interface Item {
-  id: number;
-  i: number;
-  manager: string;
-  team_leader: string;
-  area: string;
-  team_sub_leader: string[];
-  research_titles: string[];
-  projects: string[];
-  team_heros: string[];
-  contact: { name: string; number: string };
-  team_members: string[];
-}
+import Rouxingtuandui from "../../../data/team.json";
 
 interface Props {
-  handleSetWindow: (item: Item) => void;
+  handleSetWindow: (item: any) => void;
 }
 
 const colWidths = ["7%", "9%", "9%", "11%", "11%", "15%", "19%", "13%", "9%"];
 
 const RouXingTuanDui: React.FC<Props> = ({ handleSetWindow }) => {
-  const [data, setData] = useState<Item[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/returnAllRouxingtuandui")
-      .then((res) => res.json())
-      .then((arr: Item[]) => setData(arr))
-      .catch(console.error);
-  }, []);
-
   return (
     <div className="w-full h-auto border-t-4 border-[#12a1a0]">
       <table className="w-full table-fixed">
@@ -56,9 +33,9 @@ const RouXingTuanDui: React.FC<Props> = ({ handleSetWindow }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, idx) => (
-            <tr key={item.id} className={idx % 2 ? "bg-gray-200" : ""}>
-              <td className="text-center h-[80px]">{item.i}</td>
+          {Rouxingtuandui.map((item, idx) => (
+            <tr key={idx} className={idx % 2 ? "bg-gray-200" : ""}>
+              <td className="text-center h-[80px]">{idx + 1}</td>
               <td className="text-center h-[80px]">{item.manager}</td>
               <td className="text-center h-[80px]">{item.team_leader}</td>
               <td className="text-center h-[80px]">{item.area}</td>

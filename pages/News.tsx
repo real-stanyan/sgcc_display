@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "../components/common/Header";
 import {
   Breadcrumb,
@@ -9,6 +9,8 @@ import {
   BreadcrumbSeparator,
 } from "../src/components/ui/breadcrumb";
 import { Link, useSearchParams, useLocation, Outlet } from "react-router-dom";
+import YaowenData from "../data/yaowen.json";
+import KuaixuData from "../data/kuaixun.json";
 
 const Boxes = [
   { name: "要闻", icon: "/icons/yaowen.webp", box: "yaowen" },
@@ -60,23 +62,15 @@ const NewsLine = ({
 };
 
 const YaoWenList = () => {
-  const [data, setData] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/ReturnAllYaoWen")
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.statusText)))
-      .then(setData);
-  }, []);
-
   return (
     <>
-      {data.map((item, i) => (
+      {YaowenData.map((item, i) => (
         <NewsLine
           key={i}
           index={i}
-          name={item.title}
-          date={item.release_date}
-          path={`/yaowen/${item.id}`}
+          name={item.name}
+          date={item.date}
+          path={item.path}
         />
       ))}
     </>
@@ -84,23 +78,15 @@ const YaoWenList = () => {
 };
 
 const KuaiXunList = () => {
-  const [data, setData] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/ReturnAllKuaiXun")
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.statusText)))
-      .then(setData);
-  }, []);
-
   return (
     <>
-      {data.map((item, i) => (
+      {KuaixuData.map((item, i) => (
         <NewsLine
           key={i}
           index={i}
-          name={item.title}
-          date={item.release_date}
-          path={`/kuaixun/${item.id}`}
+          name={item.name}
+          date={item.date}
+          path={item.path}
         />
       ))}
     </>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BanZuMingChengData from "../../../data/banzumingcheng.json";
 import BanZuRenYuanData from "../../../data/banzurenyuan.json";
 import {
@@ -18,44 +18,6 @@ import Shudianyunjian from "./Shudianyunjian";
 import Peidianyunjian from "./Peidianyunjian";
 import Tongxing from "./Tongxing";
 import { LinkIcon } from "lucide-react";
-
-type Banzu = {
-  id: string;
-  i: number;
-  danwei: "扬州公司" | "江都公司" | "仪征公司" | "高邮公司" | "宝应公司";
-  bumen:
-    | "500千伏变电运检中心"
-    | "变电检修中心"
-    | "输电运检中心"
-    | "城西供电服务中心"
-    | "城东供电服务中心"
-    | "信息通信分公司（数据中心）"
-    | "配电运检中心（项目管理分中心）";
-  banzu_name:
-    | "变电二次检修班"
-    | "变电修试三班"
-    | "输电运检二班"
-    | "电缆运检班"
-    | "低压综合服务二班"
-    | "信通运检一班"
-    | "信通运检二班"
-    | "变电检修班"
-    | "配电运检一班"
-    | "配电运检二班"
-    | "配电运检班";
-  banzu_type:
-    | "变电二次检修"
-    | "变电修试"
-    | "输电运检"
-    | "电缆运检"
-    | "低压综合服务"
-    | "信通运检（通信）"
-    | "信通运检（数字化）"
-    | "配电运检";
-  yewu_percent: string;
-  bili: string | null;
-  jiafenxiang: string | null;
-};
 
 const colWidthsMingCheng = [
   "4%",
@@ -86,16 +48,8 @@ const colWidthsRenYuan = [
 ];
 
 const BanZu: React.FC = () => {
-  const [data, setData] = useState<Banzu[]>([]);
   const [currentBanzu, setCurrentBanzu] = useState<string>("");
   const [currentPingjia, setCurrentPingjia] = useState<string>("");
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/returnAllBanzu")
-      .then((res) => res.json())
-      .then((arr: Banzu[]) => setData(arr))
-      .catch(console.error);
-  }, []);
 
   return (
     <>
@@ -178,9 +132,9 @@ const BanZu: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, idx) => (
-                <tr key={item.id} className={idx % 2 ? "bg-gray-200" : ""}>
-                  <td className="text-center h-[80px]">{item.i}</td>
+              {BanZuMingChengData.map((item, idx) => (
+                <tr key={idx} className={idx % 2 ? "bg-gray-200" : ""}>
+                  <td className="text-center h-[80px]">{idx + 1}</td>
                   <td className="text-center h-[80px]">{item.danwei}</td>
                   <td className="text-center h-[80px]">{item.bumen}</td>
                   <td
@@ -198,7 +152,7 @@ const BanZu: React.FC = () => {
                     </p>
                   </td>
                   <td className="text-center h-[80px]">{item.banzu_type}</td>
-                  <td className="text-center h-[80px]">{item.yewu_percent}</td>
+                  <td className="text-center h-[80px]">{item.percent}</td>
                   <td className="text-left h-[80px] p-4">{item.bili}</td>
                   <td className="text-left h-[80px] p-4">{item.jiafenxiang}</td>
                   <td className="text-center h-[80px]">
